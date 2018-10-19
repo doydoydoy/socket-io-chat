@@ -35,7 +35,11 @@
 
         socket.on('chat message', (msg) => {
           $('#messages').append($('<li>').text(msg));
-        })
+        });
+
+        socket.on('broadcast status', (status) => {
+          $('#messages').append($('<li>').text('A user has ' + status));
+        });
       });
     </script>
 </html>

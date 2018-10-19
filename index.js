@@ -7,18 +7,21 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
+	broadcastStatus('connected');
+
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+		broadcastStatus('disconnected');
     });
 
     socket.on('chat message', (msg) => {
         io.emit('chat message', msg);
-    })
+    });
 });
-
-io.emit('some event', { for: 'everyone' });
 
 http.listen(3000, () => {
     console.log('listening on *:3000');
 });
+
+broadcastStatus = (status) => {
+	io.emit('broadcast status', status);
+}
